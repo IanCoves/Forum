@@ -1,0 +1,8 @@
+1)
+	As a forum user, I can visit the web page and add a message to the thread.
+	this allows me to contribute to the conversatiton.
+	Test: messages added through via the form can be viewed in the database.
+2)
+	As a forum user, I can view all previous messages posted to the thread. 
+	So that I know what has been previously said.
+	tests: can view content
