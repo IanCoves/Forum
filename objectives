@@ -1,4 +1,4 @@
-Forum; First Objective:  Post text, view posts.
++Forum; First Objective:  Post text, view posts.
 1)
 	As a forum user, I can visit the web page and add a message to the thread.
 	this allows me to contribute to the conversatiton.
@@ -12,7 +12,8 @@ Forum; First Objective:  Post text, view posts.
 	
 	
 	
-Forum; Second Objective:  User login, display user for each reply. Register username & password for login.
+	
++Forum; Second Objective:  User login, display user for each reply. Register username & password for login.
 1. 
   As a user with an account I am able to log in and posts that I make show my name.
   This allows the creator of posts to be known.
@@ -30,3 +31,14 @@ Forum; Second Objective:  User login, display user for each reply. Register user
   
   *User names must be unique. 
   *An error is given if my chosen username is not unique.
+  
+  
+  
+  
++Forum; Admin Objective: Database structure backup/repository
+1.
+  As an administrator trying to install the system, I want to follow instructions to configure the database. 
+  This is so that I don't have to guess what tables and columns are required.
+
+mysqldump — A Database Backup Program
+	http://dev.mysql.com/doc/refman/5.1/en/mysqldump.html
