@@ -42,3 +42,13 @@
 
 mysqldump — A Database Backup Program
 	http://dev.mysql.com/doc/refman/5.1/en/mysqldump.html
+	
+
+	
++Forum; Third Objective: Basic topic-reply structure.
+1. As an admin I can add topics to the database.
+2. As a user I can access all topics via a basic menu page.
+3. As an admin I can see that replies are tagged with a corresponding topic ID. 
+3. As a user I can read all replies made to a specific topic.
+
+Test: Topics created by admin can be seen by users. Prior functionality works.

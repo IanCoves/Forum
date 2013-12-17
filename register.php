@@ -17,7 +17,6 @@
 			$username = $_POST['username'];
 			$password = $_POST['password'];
 			
-			echo $username;
 			
 			//check for blank feilds
 			if(!$_POST['username'] | !$_POST['password']) {
@@ -28,19 +27,23 @@
 			}
 			
 			//Check to see if username already exists.
-			$sql = "SELECT user_name FROM user";
+			$sql = "SELECT user_name FROM user WHERE `user_name`='$username'";
 			if($result = mysqli_query($db, $sql)) {
 				$count = mysqli_num_rows($result);
-				if($count != 0) {
+				
+				if($count == 0) {
 					$insert = "INSERT INTO user (`user_name`, `user_pass`) VALUES('$username', '$password')";
 					$add_user = mysqli_query($db, $insert);
 					
 					//return to reply.php
 					header('location: reply.php');
 				}
+				else {
+					echo "Registration failed: </br>Username already exists. Please register a different name.</br></br>";
+					
+				}
 			}
-		}
-		else {		
+		}		
 	?>
 		<h4>Creating an account.</h4>
 		<p>Register desired username and password: </p>
@@ -55,9 +58,9 @@
 			</label>
 			<input type="submit" name="register" id="register-button" value="register">
 		</form>
-		
+		</br>
+		<a href='./reply.php'>Back to topic.</a>
 	<?php
-		}
 		$db->close();
 	?>
 	</body>

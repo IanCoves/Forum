@@ -33,7 +33,7 @@
 		$row = mysqli_fetch_row($result);
 		
 		//Register user's name and id
-		$_SESSION['user'] = $user;
+		$_SESSION['user'] = $row[1];
 		$_SESSION['user_id'] = $row[0];
 	}
 	else
