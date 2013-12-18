@@ -12,6 +12,12 @@
 		
 		//connect to the database
 		require("mysqli.php");
+		
+		if($_POST['topic_subject']) {
+			$_SESSION['topic_subject'] = $_POST['topic_subject'];
+			$_SESSION['topic_id'] = $_POST['topic_id'];
+		}
+		$topic_id = $_SESSION['topic_id'];
 
 		//Check Login
 		if(isset($_SESSION['user'])) {
@@ -63,6 +69,8 @@
 	<?php		
 		//submit reply to database
 		if($_POST['send-reply']) {	
+		
+			
 			//Makes sure they did not leave blank fields
 			if(!$_POST['reply']) 
 			{
@@ -77,11 +85,11 @@
 			//Insert new reply into the database
 			if(isset($_SESSION['user'])){
 				$user_id = $_SESSION['user_id'];
-				$insert = "INSERT INTO reply (`reply_content`, `reply_user`) VALUES('$reply', '$user_id')";
+				$insert = "INSERT INTO reply (`reply_content`, `reply_user`, `reply_topic`) VALUES('$reply', '$user_id', '$topic_id')";
 				$add_reply = mysqli_query($db, $insert);
 			}
 			else {
-				$insert = "INSERT INTO reply (`reply_content`) VALUES('$reply')";
+				$insert = "INSERT INTO reply (`reply_content`, `reply_topic`) VALUES('$reply', '$topic_id')";
 				$add_reply = mysqli_query($db, $insert);
 			}
 			if($add_reply) {
@@ -92,9 +100,10 @@
 	<?php
 			}
 		}
+		
+		//<!--Topic Title-->
+		echo "<h3>".$_SESSION['topic_subject']."</h3>";
 	?>
-		<!--Topic Title-->
-		<h3>Free Chat Topic!</h3>
 		
 		
 		<!--Add reply to database form-->
@@ -107,8 +116,8 @@
 		<!--Topic Replies from database Title-->
 		<h3>What others had to say:</h3>
 	<?php
-		//select content from "reply_content" and id from "reply_user"
-		$sql = "SELECT reply_content, reply_user FROM reply";
+		//select content from "reply_content" and id from "reply_user" where "reply_topic" is the topic id
+		$sql = "SELECT reply_content, reply_user FROM reply WHERE reply_topic = $topic_id";
 		if ($result = mysqli_query($db, $sql)) {
 		
 			//fetch reply object array 
