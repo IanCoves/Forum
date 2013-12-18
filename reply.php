@@ -13,6 +13,7 @@
 		//connect to the database
 		require("mysqli.php");
 		
+		//check topic
 		if($_POST['topic_subject']) {
 			$_SESSION['topic_subject'] = $_POST['topic_subject'];
 			$_SESSION['topic_id'] = $_POST['topic_id'];
@@ -59,13 +60,14 @@
 		</form>
 		
 	<?php
-			echo "Not registered? <a href=\"register.php\">Create a free account</a>.";
+			echo "Not registered? <a href=\"register.php\">Create a free account</a>.</br></br>";
 		
 		}
 		/**/
 		
 	
 	?>
+		<a href='./topic.php'>Return to Topic Menu.</a>
 	<?php		
 		//submit reply to database
 		if($_POST['send-reply']) {	
@@ -100,9 +102,21 @@
 	<?php
 			}
 		}
+		//select user id from topic table
+		$sql = "SELECT topic_user FROM topic WHERE topic_id = $topic_id";
+		$result = mysqli_query($db, $sql);
+		$row = mysqli_fetch_row($result);
+		
+		//select topic creators name from user
+		$sql = "SELECT user_name FROM user WHERE user_id = $row[0]";
+		$result = mysqli_query($db, $sql);
+		$row = mysqli_fetch_row($result);
+		
 		
 		//<!--Topic Title-->
 		echo "<h3>".$_SESSION['topic_subject']."</h3>";
+		echo "Topic started by ".$row[0];
+		
 	?>
 		
 		

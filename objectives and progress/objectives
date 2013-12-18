@@ -52,3 +52,13 @@ mysqldump — A Database Backup Program
 3. As a user I can read all replies made to a specific topic.
 
 Test: Topics created by admin can be seen by users. Prior functionality works.
+
+
+
++Forum; Fourth Objective: Topics enhanced.
+1.  As a user I can login and register from the topic selection page.
+2.  As a registered user I can create a new topic.
+3.  As an admin I can see which user created each topic in the database.
+4.  As a user I can see who created the topic as I'm viewing it's replies.
+
+Test: User created topics display the creator's name.
