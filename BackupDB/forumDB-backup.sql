@@ -26,10 +26,13 @@ CREATE TABLE `reply` (
   `reply_id` int(8) NOT NULL AUTO_INCREMENT,
   `reply_content` tinytext,
   `reply_user` int(8) DEFAULT NULL,
+  `reply_topic` int(8) DEFAULT NULL,
   PRIMARY KEY (`reply_id`),
   KEY `fk_reply_user` (`reply_user`),
+  KEY `fk_reply_topic` (`reply_topic`),
+  CONSTRAINT `fk_reply_topic` FOREIGN KEY (`reply_topic`) REFERENCES `topic` (`topic_id`),
   CONSTRAINT `fk_reply_user` FOREIGN KEY (`reply_user`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,8 +41,35 @@ CREATE TABLE `reply` (
 
 LOCK TABLES `reply` WRITE;
 /*!40000 ALTER TABLE `reply` DISABLE KEYS */;
-INSERT INTO `reply` VALUES (1,'First! :-P',NULL),(2,'How original^^',NULL),(3,'hey! well screw you guy.',NULL),(4,'I like random threads... catfeesh?',NULL),(5,'u wot?',NULL),(6,'Hello world',NULL),(7,'Coz I\'m a beast.',NULL),(8,'yer son',1),(9,'double checkin NOggga',1),(10,'..and then I loggz out yo',NULL),(11,'I\'m the best!',3);
+INSERT INTO `reply` VALUES (41,'first :P',NULL,3),(42,'well, u didn\'t register :P',NULL,3),(43,'rofl forgot to login :/',11,3),(44,'Looking good Rowan :D',11,4),(45,'cheer cheer !',NULL,4),(46,'i done just created dis topic',11,5),(47,'ima g',12,5),(48,'reply here.',NULL,3),(49,'again.',11,3),(50,'first.',11,6),(51,'hello\r\n',13,6);
 /*!40000 ALTER TABLE `reply` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `topic`
+--
+
+DROP TABLE IF EXISTS `topic`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `topic` (
+  `topic_id` int(8) NOT NULL AUTO_INCREMENT,
+  `topic_subject` varchar(255) NOT NULL,
+  `topic_user` int(8) DEFAULT NULL,
+  PRIMARY KEY (`topic_id`),
+  KEY `fk_topic_user` (`topic_user`),
+  CONSTRAINT `fk_topic_user` FOREIGN KEY (`topic_user`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `topic`
+--
+
+LOCK TABLES `topic` WRITE;
+/*!40000 ALTER TABLE `topic` DISABLE KEYS */;
+INSERT INTO `topic` VALUES (3,'First Topic!',NULL),(4,'Forum Feedback',NULL),(5,'Awesome Topic',NULL),(6,'new topic.',NULL),(7,'Great successes',11);
+/*!40000 ALTER TABLE `topic` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -54,7 +84,7 @@ CREATE TABLE `user` (
   `user_name` varchar(255) NOT NULL,
   `user_pass` varchar(255) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,7 +93,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'IanCoves','hungry'),(2,'g','g'),(3,'Rowan','king');
+INSERT INTO `user` VALUES (11,'IanCoves','hungry'),(12,'g','g'),(13,'mum','kk');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -76,4 +106,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-11 17:21:30
+-- Dump completed on 2013-12-18 11:57:51
