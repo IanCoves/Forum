@@ -32,7 +32,7 @@ CREATE TABLE `reply` (
   KEY `fk_reply_topic` (`reply_topic`),
   CONSTRAINT `fk_reply_topic` FOREIGN KEY (`reply_topic`) REFERENCES `topic` (`topic_id`),
   CONSTRAINT `fk_reply_user` FOREIGN KEY (`reply_user`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,7 +49,7 @@ CREATE TABLE `topic` (
   PRIMARY KEY (`topic_id`),
   KEY `fk_topic_user` (`topic_user`),
   CONSTRAINT `fk_topic_user` FOREIGN KEY (`topic_user`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +64,7 @@ CREATE TABLE `user` (
   `user_name` varchar(255) NOT NULL,
   `user_pass` varchar(255) NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -76,4 +76,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-18 11:56:29
+-- Dump completed on 2013-12-18 19:35:15
