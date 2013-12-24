@@ -35,6 +35,7 @@
 		//Register user's name and id
 		$_SESSION['user'] = $row[1];
 		$_SESSION['user_id'] = $row[0];
+		$_SESSION['user_admin'] = $row[3];
 	}
 	else
 	{

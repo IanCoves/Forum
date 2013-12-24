@@ -63,6 +63,7 @@ CREATE TABLE `user` (
   `user_id` int(8) NOT NULL AUTO_INCREMENT,
   `user_name` varchar(255) NOT NULL,
   `user_pass` varchar(255) NOT NULL,
+  `user_admin` int(2) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -76,4 +77,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-18 19:35:15
+-- Dump completed on 2013-12-24  7:16:35

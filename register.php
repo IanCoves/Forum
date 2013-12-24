@@ -35,8 +35,8 @@
 					$insert = "INSERT INTO user (`user_name`, `user_pass`) VALUES('$username', '$password')";
 					$add_user = mysqli_query($db, $insert);
 					
-					//return to reply.php
-					header('location: reply.php');
+					//return to topic.php
+					header('location: topic.php');
 				}
 				else {
 					echo "Registration failed: </br>Username already exists. Please register a different name.</br></br>";
@@ -59,7 +59,7 @@
 			<input type="submit" name="register" id="register-button" value="register">
 		</form>
 		</br>
-		<a href='./reply.php'>Back to topic.</a>
+		<a href='./topic.php'>Back to topic menu.</a>
 	<?php
 		$db->close();
 	?>

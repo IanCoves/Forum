@@ -1,5 +1,5 @@
 <!--Rowan Turner-->
-
+	
 <html>
 
 	<head>
@@ -8,6 +8,7 @@
 	
 	<body>
 	<?php 
+		/**/		
 		session_start(); 
 		
 		//connect to the database
@@ -26,7 +27,18 @@
 			
 			echo "Logged in as ";
 			echo $_SESSION['user'];
-			
+			echo "</br>";
+			//Display admin priveleges from session
+			if (isset($_SESSION['user_admin'])) {
+				if($_SESSION['user_admin'] ==0) {
+					echo "Moderator";
+				}
+				else {
+					if ($_SESSION['user_admin'] ==1) {
+						echo "Admin";
+					}
+				}
+			}
 	?>
 		
 		<!--Lougout Form/ button-->
@@ -97,11 +109,46 @@
 			if($add_reply) {
 	?>
 	
-	<p>Reply Successful!.</p>
+	<p>Reply Saved.</p>
 		
 	<?php
 			}
 		}
+		//*** DELETE REPLY *** ***
+		//reply id sent from form
+		if ($_POST['delete_reply']) {
+			$id = $_POST['reply_id'];
+
+			//Run delete query with reply ID
+			$sql="DELETE FROM reply WHERE reply_id='$id'";
+			if($result=mysqli_query($db, $sql)) {
+				
+				echo "Reply deleted.";
+			}
+			else {
+				echo "Reply failed to delete.";
+			}
+		}
+		//*** *** *** *** *** *** ***
+		
+		if(($_POST['edit_reply']) && ($_POST['edited_reply'])) {
+		
+			//strip content to prevent basic SQL injection
+			$reply = stripslashes($_POST['edited_reply']);
+			$reply = mysql_real_escape_string($reply);
+			
+			//save edited reply
+			$sql="UPDATE reply SET reply_content='$reply' WHERE reply_id='".$_POST['reply_id']."'";
+			if($result=mysqli_query($db, $sql)) {
+				//display new reply
+				echo "<p>Reply saved.</p>";
+			}
+			else {
+				echo "<p>Edit reply failed.</p>";
+			}
+		}
+		
+		
 		//select user id from topic table
 		$sql = "SELECT topic_user FROM topic WHERE topic_id = $topic_id";
 		$result = mysqli_query($db, $sql);
@@ -122,7 +169,7 @@
 		
 		<!--Add reply to database form-->
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" >
-			<textarea name="reply" rows="14" cols="80"></textarea>
+			<textarea name="reply" rows="4" cols="60"></textarea>
 			</br>
 			<input type="submit" name="send-reply" value="Submit">
 		</form>
@@ -131,13 +178,13 @@
 		<h3>What others had to say:</h3>
 	<?php
 		//select content from "reply_content" and id from "reply_user" where "reply_topic" is the topic id
-		$sql = "SELECT reply_content, reply_user FROM reply WHERE reply_topic = $topic_id";
+		$sql = "SELECT reply_content, reply_user, reply_id FROM reply WHERE reply_topic = $topic_id";
 		if ($result = mysqli_query($db, $sql)) {
 		
 			//fetch reply object array 
 			while ($row = mysqli_fetch_row($result)) {
 			
-				//check if reply was made by a known user
+				//If reply is made by a known user
 				if(!$row[1]==NULL) {
 				
 					//retreive user_name from user
@@ -145,15 +192,42 @@
 					$resultByID = mysqli_query($db, $findByID);
 					$nameByID = mysqli_fetch_row($resultByID);
 					
-					//display user name and reply content
+					//display user name
 					echo $nameByID[0]." said: </br>";
-					echo $row[0]."</br></br>";
 				}
 				else {
-					//display reply content under default "guest" user
+					//display "guest" user
 					echo "Guest said: </br>";
-					echo "  ".$row[0]."</br></br>";
 				}
+				echo $row[0];
+	
+				if (isset($_SESSION['user'])) {
+					
+					//if reply was made by the current registered user, or loged in ueser has admin
+					if(($row[1] == $_SESSION['user_id']) || (($_SESSION['user_admin']) != NULL)){
+						
+						//start edit form
+						echo '<form id="change_reply" method="post" action="'.$_SERVER['PHP_SELF'].'">';
+						
+						//edit button clicked on this reply, but has not been edited yet.
+						if (($_POST['edit_reply']) && ($_POST['reply_id'] == $row[2]) && !($_POST['edited_reply'])) {
+
+							//display editable text box with old reply as existing text
+							echo '<textarea name="edited_reply" rows="4" cols="60" >'.$row[0].'</textarea></br>';
+						}
+				
+						echo '<input type="submit" name="delete_reply" id="delete-button" value="Delete" />';
+						echo '<input type="submit" name="edit_reply" id="edit-button" value="Edit" />';
+						echo '<input type="hidden" name="reply_id" value="'.$row[2].'" /></form>';
+						echo "</br>";
+					}
+				}
+				else {
+					echo '</br></br>';
+				}
+					
+					
+				
 			}
 			/* free result set */
 			mysqli_free_result($result);
